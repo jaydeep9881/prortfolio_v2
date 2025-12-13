@@ -6,7 +6,6 @@ import Projects from './sections/Projects';
 import Skills from './sections/Skills';
 import Learning from './sections/Learning';
 import About from './sections/About';
-import Blog from './sections/Blog';
 import Contact from './sections/Contact';
 import config from './data/config';
 import Experience from './sections/Experience';
