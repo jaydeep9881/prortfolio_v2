@@ -49,7 +49,7 @@ function App() {
           <Projects />  
           <Learning />
           <About />
-          <Blog />
+          
           <Contact />
         </main>
         <Footer />
