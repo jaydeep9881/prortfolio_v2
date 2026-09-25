@@ -9,14 +9,15 @@ import About from './sections/About';
 import Contact from './sections/Contact';
 import config from './data/config';
 import Experience from './sections/Experience';
-import UniverseBackground from './components/UniverseBackground';
+import GTABackground from './components/GTABackground';
+import GTALoadingScreen from './components/GTALoadingScreen';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const stored = localStorage.getItem('theme');
     if (stored === 'light' || stored === 'dark') return stored;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return prefersDark ? 'dark' : 'light';
+    return 'dark'; // Default to dark for GTA theme
   });
 
   useEffect(() => {
@@ -36,19 +37,30 @@ function App() {
     setVar('accent', colors.accent);
   }, [theme]);
 
+  // Simulate loading (3 seconds)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <GTALoadingScreen />;
+  }
+
   return (
-    <div className="relative min-h-screen bg-background/80 text-gray-900 dark:text-white backdrop-blur-[1px] overflow-hidden">
-      <UniverseBackground theme={theme} />
+    <div className="relative min-h-screen bg-black text-white">
+      <GTABackground theme={theme} />
       <div className="relative z-10">
         <Header theme={theme} setTheme={setTheme} />
-        <main className="max-w-6xl mx-auto px-4 sm:px-6">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6">
           <Hero />
-          <Experience/>
+          <Experience />
           <Skills />
-          <Projects />  
+          <Projects />
           <Learning />
           <About />
-          
           <Contact />
         </main>
         <Footer />

@@ -2,6 +2,138 @@
 @tailwind components;
 @tailwind utilities;
 
+/* GTA 6 inspired global styles */
+@layer base {
+  * {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  body {
+    @apply bg-black text-white;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-black;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyan-400 hover:bg-cyan-300;
+  }
+
+  /* Keyboard focus styles */
+  kbd {
+    @apply inline-block px-2 py-1 text-sm font-mono bg-gray-800 border border-cyan-400/50 rounded shadow;
+  }
+}
+
+@layer utilities {
+  /* Neon glow effects */
+  .neon-glow-cyan {
+    text-shadow: 0 0 10px rgba(34, 211, 238, 0.8),
+                 0 0 20px rgba(34, 211, 238, 0.6),
+                 0 0 30px rgba(34, 211, 238, 0.4);
+  }
+
+  .neon-glow-purple {
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.8),
+                 0 0 20px rgba(168, 85, 247, 0.6),
+                 0 0 30px rgba(168, 85, 247, 0.4);
+  }
+
+  .neon-glow-pink {
+    text-shadow: 0 0 10px rgba(236, 72, 153, 0.8),
+                 0 0 20px rgba(236, 72, 153, 0.6),
+                 0 0 30px rgba(236, 72, 153, 0.4);
+  }
+
+  /* Scanlines effect */
+  .scanlines {
+    position: relative;
+  }
+
+  .scanlines::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* VHS effect */
+  .vhs-effect {
+    animation: vhs 0.5s infinite;
+  }
+
+  @keyframes vhs {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    33% {
+      transform: translateX(-2px);
+    }
+    66% {
+      transform: translateX(2px);
+    }
+  }
+
+  /* Glitch text animation */
+  @keyframes glitch {
+    0% {
+      text-shadow: 2px 2px #00ffff, -2px -2px #ff00ff;
+    }
+    25% {
+      text-shadow: -2px -2px #00ffff, 2px 2px #ff00ff;
+    }
+    50% {
+      text-shadow: 2px -2px #00ffff, -2px 2px #ff00ff;
+    }
+    75% {
+      text-shadow: -2px 2px #00ffff, 2px -2px #ff00ff;
+    }
+    100% {
+      text-shadow: 2px 2px #00ffff, -2px -2px #ff00ff;
+    }
+  }
+
+  .glitch {
+    animation: glitch 0.3s infinite;
+  }
+
+  /* Retro grid background */
+  .retro-grid {
+    background-image: 
+      linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+}
+
+/* Canvas container */
+canvas {
+  display: block;
+  outline: none;
+}
+
 :root {
   color-scheme: dark light;
   --background: 15 23 36; /* #0f1724 */
