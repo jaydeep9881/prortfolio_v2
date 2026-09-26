@@ -15,16 +15,16 @@ export default function About() {
     <section id="about" className="pt-24 pb-16">
       {/* Section Header */}
       <div className="mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-cyan-500/15 border-l-4 border-cyan-400 text-cyan-300 font-hud text-xs font-bold tracking-widest mb-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary/20 border-l-4 border-primary text-primary font-hud text-xs font-bold tracking-widest mb-3">
           <span>DEVELOPER PROFILE</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
           ABOUT{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-cyan-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-highlight">
             JAYDEEP CHAUDHARI
           </span>
         </h2>
-        <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-sky-300 mt-4" />
+        <div className="w-28 h-1 bg-gradient-to-r from-primary to-accent mt-4" />
       </div>
 
       <div className="grid lg:grid-cols-12 gap-10 items-start">
@@ -36,8 +36,8 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="lg:col-span-7 ocean-card p-6 sm:p-8 space-y-6"
         >
-          <div className="border-b border-cyan-400/20 pb-4">
-            <span className="font-hud text-xs font-bold text-cyan-400 tracking-wider">
+          <div className="border-b border-primary/20 pb-4">
+            <span className="font-hud text-xs font-bold text-accent tracking-wider">
               OPERATIONAL BRIEFING
             </span>
             <h3 className="font-display text-2xl font-bold text-white mt-1">
@@ -53,7 +53,7 @@ export default function About() {
             {a.summary2}
           </p>
 
-          <div className="p-4 bg-cyan-950/40 border-l-4 border-cyan-400 text-cyan-200 text-sm font-hud font-semibold">
+          <div className="p-4 bg-primary/10 border-l-4 border-primary text-accent text-sm font-hud font-semibold">
             {a.roleLine}
           </div>
 
@@ -84,9 +84,9 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="ocean-card p-5 border-l-4 border-cyan-400 hover:border-cyan-300 transition-colors"
+              className="ocean-card p-5 border-l-4 border-primary hover:border-accent transition-colors"
             >
-              <div className="font-hud text-[11px] font-bold text-cyan-400 tracking-widest uppercase mb-1">
+              <div className="font-hud text-[11px] font-bold text-accent tracking-widest uppercase mb-1">
                 {stat.label}
               </div>
               <div className="font-display text-lg sm:text-xl font-bold text-white">

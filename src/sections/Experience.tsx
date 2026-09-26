@@ -2,13 +2,13 @@ import { motion } from 'framer-motion';
 
 interface ExperienceItem {
   id: string;
+  missionNumber: string;
   role: string;
   company: string;
   location: string;
   period: string;
   duration: string;
   type: string;
-  missionNumber: string;
   achievements: string[];
   tech: string[];
 }
@@ -54,20 +54,20 @@ export default function Experience() {
     <section id="experience" className="pt-24 pb-16">
       {/* Section Header */}
       <div className="mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-cyan-500/15 border-l-4 border-cyan-400 text-cyan-300 font-hud text-xs font-bold tracking-widest mb-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary/20 border-l-4 border-primary text-primary font-hud text-xs font-bold tracking-widest mb-3">
           <span>CAREER TIMELINE</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
           PROFESSIONAL{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-cyan-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-highlight">
             EXPERIENCE
           </span>
         </h2>
-        <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-sky-300 mt-4" />
+        <div className="w-28 h-1 bg-gradient-to-r from-primary to-accent mt-4" />
       </div>
 
       {/* Timeline List */}
-      <div className="relative border-l-2 border-cyan-400/40 ml-4 sm:ml-8 space-y-12">
+      <div className="relative border-l-2 border-primary/40 ml-4 sm:ml-8 space-y-12">
         {EXPERIENCES.map((exp, idx) => (
           <motion.div
             key={exp.id}
@@ -77,54 +77,54 @@ export default function Experience() {
             transition={{ duration: 0.6, delay: idx * 0.15 }}
             className="relative pl-6 sm:pl-10"
           >
-            {/* Glowing Milestone Marker */}
-            <div className="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-[#041224] border-2 border-cyan-400 flex items-center justify-center shadow-md shadow-cyan-400/50">
-              <span className="w-2.5 h-2.5 bg-cyan-300 rounded-full animate-ping" />
+            {/* Milestone Marker */}
+            <div className="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-surface border-2 border-primary flex items-center justify-center shadow-md shadow-primary/50">
+              <span className="w-2.5 h-2.5 bg-accent rounded-full animate-ping" />
             </div>
 
             {/* Experience Card */}
             <div className="ocean-card p-6 sm:p-8 relative group">
               {/* Mission Top Header */}
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-cyan-400/20">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-primary/20">
                 <div className="flex items-center gap-3">
-                  <span className="font-hud font-bold text-xs bg-cyan-500/20 text-cyan-300 px-2.5 py-1 border border-cyan-400/50">
+                  <span className="font-hud font-bold text-xs bg-primary/20 text-accent px-2.5 py-1 border border-primary/50">
                     {exp.missionNumber}
                   </span>
                   <span className="text-xs font-hud font-semibold text-gray-400">
                     {exp.type}
                   </span>
                 </div>
-                <div className="font-hud text-xs sm:text-sm font-bold text-cyan-300">
+                <div className="font-hud text-xs sm:text-sm font-bold text-accent">
                   {exp.period} <span className="text-gray-400">({exp.duration})</span>
                 </div>
               </div>
 
               {/* Job Title & Company */}
               <div className="mb-4">
-                <h3 className="font-display text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                <h3 className="font-display text-2xl font-bold text-white group-hover:text-accent transition-colors">
                   {exp.role}
                 </h3>
-                <div className="font-hud text-sm font-semibold text-cyan-400 mt-1">
+                <div className="font-hud text-sm font-semibold text-primary mt-1">
                   {exp.company} • <span className="text-gray-400">{exp.location}</span>
                 </div>
               </div>
 
               {/* Achievements Bullet List */}
-              <ul className="space-y-2.5 mb-6 text-sm sm:text-base text-gray-300">
+              <ul className="space-y-2.5 mb-6 text-sm sm:text-base text-gray-200">
                 {exp.achievements.map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
-                    <span className="text-cyan-400 font-bold mt-1 text-xs">▸</span>
+                    <span className="text-accent font-bold mt-1 text-xs">▸</span>
                     <span className="leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
 
               {/* Tech Stack Pills */}
-              <div className="flex flex-wrap gap-2 pt-2 border-t border-cyan-400/15">
+              <div className="flex flex-wrap gap-2 pt-2 border-t border-primary/20">
                 {exp.tech.map((t) => (
                   <span
                     key={t}
-                    className="px-2.5 py-1 bg-black/40 border border-cyan-400/30 text-cyan-300 font-hud text-xs font-semibold"
+                    className="px-2.5 py-1 bg-surface/80 border border-primary/40 text-accent font-hud text-xs font-semibold"
                   >
                     {t}
                   </span>

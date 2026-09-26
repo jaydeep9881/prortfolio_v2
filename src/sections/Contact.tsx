@@ -30,16 +30,16 @@ export default function Contact() {
     <section id="contact" className="pt-24 pb-20">
       {/* Section Header */}
       <div className="mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-cyan-500/15 border-l-4 border-cyan-400 text-cyan-300 font-hud text-xs font-bold tracking-widest mb-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary/20 border-l-4 border-primary text-primary font-hud text-xs font-bold tracking-widest mb-3">
           <span>SECURE FREQUENCY</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
           GET IN{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-cyan-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-highlight">
             TOUCH
           </span>
         </h2>
-        <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-sky-300 mt-4" />
+        <div className="w-28 h-1 bg-gradient-to-r from-primary to-accent mt-4" />
       </div>
 
       <div className="grid lg:grid-cols-12 gap-8 items-start">
@@ -51,7 +51,7 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="lg:col-span-5 ocean-card p-6 sm:p-8 space-y-6"
         >
-          <div className="border-b border-cyan-400/20 pb-4">
+          <div className="border-b border-primary/20 pb-4">
             <h3 className="font-display text-2xl font-bold text-white">
               Direct Comm Channels
             </h3>
@@ -62,19 +62,19 @@ export default function Contact() {
 
           <div className="space-y-4">
             {/* Email Card with Quick Copy */}
-            <div className="p-4 bg-black/50 border border-cyan-400/30 flex items-center justify-between gap-3">
+            <div className="p-4 bg-black/50 border border-primary/30 flex items-center justify-between gap-3">
               <div className="overflow-hidden">
-                <div className="text-[10px] font-hud text-cyan-400 uppercase">DIRECT EMAIL</div>
+                <div className="text-[10px] font-hud text-accent uppercase">DIRECT EMAIL</div>
                 <a
                   href={`mailto:${c.email}`}
-                  className="font-hud text-sm sm:text-base font-bold text-white hover:text-cyan-300 transition-colors truncate block"
+                  className="font-hud text-sm sm:text-base font-bold text-white hover:text-accent transition-colors truncate block"
                 >
                   {c.email}
                 </a>
               </div>
               <button
                 onClick={handleCopyEmail}
-                className="px-3 py-1.5 bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-black font-hud text-xs font-bold border border-cyan-400/50 transition-all flex-shrink-0"
+                className="px-3 py-1.5 bg-primary/20 hover:bg-primary text-accent hover:text-black font-hud text-xs font-bold border border-primary/50 transition-all flex-shrink-0"
               >
                 {copied ? 'COPIED!' : 'COPY'}
               </button>
@@ -85,15 +85,15 @@ export default function Contact() {
               href={c.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="p-4 bg-black/50 border border-cyan-400/30 hover:border-cyan-400 flex items-center justify-between gap-3 group transition-all block"
+              className="p-4 bg-black/50 border border-primary/30 hover:border-accent flex items-center justify-between gap-3 group transition-all block"
             >
               <div>
-                <div className="text-[10px] font-hud text-cyan-400 uppercase">LINKEDIN PROFILE</div>
-                <div className="font-display font-bold text-white group-hover:text-cyan-300 transition-colors">
+                <div className="text-[10px] font-hud text-accent uppercase">LINKEDIN PROFILE</div>
+                <div className="font-display font-bold text-white group-hover:text-accent transition-colors">
                   Jaydeep Chaudhari
                 </div>
               </div>
-              <span className="text-cyan-400 font-hud text-sm group-hover:translate-x-1 transition-transform">
+              <span className="text-accent font-hud text-sm group-hover:translate-x-1 transition-transform">
                 CONNECT ➔
               </span>
             </a>
@@ -103,15 +103,15 @@ export default function Contact() {
               href={c.github}
               target="_blank"
               rel="noreferrer"
-              className="p-4 bg-black/50 border border-cyan-400/30 hover:border-cyan-400 flex items-center justify-between gap-3 group transition-all block"
+              className="p-4 bg-black/50 border border-primary/30 hover:border-accent flex items-center justify-between gap-3 group transition-all block"
             >
               <div>
-                <div className="text-[10px] font-hud text-cyan-400 uppercase">GITHUB REPOSITORIES</div>
-                <div className="font-display font-bold text-white group-hover:text-cyan-300 transition-colors">
+                <div className="text-[10px] font-hud text-accent uppercase">GITHUB REPOSITORIES</div>
+                <div className="font-display font-bold text-white group-hover:text-accent transition-colors">
                   github.com/jaydeep9881
                 </div>
               </div>
-              <span className="text-cyan-400 font-hud text-sm group-hover:translate-x-1 transition-transform">
+              <span className="text-accent font-hud text-sm group-hover:translate-x-1 transition-transform">
                 EXPLORE ➔
               </span>
             </a>
@@ -120,15 +120,15 @@ export default function Contact() {
             <a
               href={c.resumeUrl}
               download
-              className="p-4 bg-black/50 border border-cyan-400/30 hover:border-cyan-400 flex items-center justify-between gap-3 group transition-all block"
+              className="p-4 bg-black/50 border border-primary/30 hover:border-accent flex items-center justify-between gap-3 group transition-all block"
             >
               <div>
-                <div className="text-[10px] font-hud text-cyan-400 uppercase">OFFICIAL DOSSIER</div>
-                <div className="font-display font-bold text-white group-hover:text-cyan-300 transition-colors">
+                <div className="text-[10px] font-hud text-accent uppercase">OFFICIAL DOSSIER</div>
+                <div className="font-display font-bold text-white group-hover:text-accent transition-colors">
                   Download Full Resume PDF
                 </div>
               </div>
-              <span className="text-cyan-400 font-hud text-sm group-hover:translate-y-0.5 transition-transform">
+              <span className="text-accent font-hud text-sm group-hover:translate-y-0.5 transition-transform">
                 DOWNLOAD ⬇
               </span>
             </a>
@@ -148,7 +148,7 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="lg:col-span-7 ocean-card p-6 sm:p-8"
         >
-          <div className="border-b border-cyan-400/20 pb-4 mb-6">
+          <div className="border-b border-primary/20 pb-4 mb-6">
             <h3 className="font-display text-2xl font-bold text-white">
               Transmit Encrypted Message
             </h3>
@@ -160,7 +160,7 @@ export default function Contact() {
           <form onSubmit={onSubmit} className="space-y-4" aria-label="Contact form">
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="name" className="block text-xs font-hud font-bold text-cyan-400 uppercase mb-1">
+                <label htmlFor="name" className="block text-xs font-hud font-bold text-accent uppercase mb-1">
                   Agent / Name *
                 </label>
                 <input
@@ -173,7 +173,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-xs font-hud font-bold text-cyan-400 uppercase mb-1">
+                <label htmlFor="email" className="block text-xs font-hud font-bold text-accent uppercase mb-1">
                   Return Frequency (Email) *
                 </label>
                 <input
@@ -188,7 +188,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <label htmlFor="subject" className="block text-xs font-hud font-bold text-cyan-400 uppercase mb-1">
+              <label htmlFor="subject" className="block text-xs font-hud font-bold text-accent uppercase mb-1">
                 Mission Subject *
               </label>
               <input
@@ -201,7 +201,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-xs font-hud font-bold text-cyan-400 uppercase mb-1">
+              <label htmlFor="message" className="block text-xs font-hud font-bold text-accent uppercase mb-1">
                 Transmission Briefing *
               </label>
               <textarea
@@ -215,7 +215,7 @@ export default function Contact() {
             </div>
 
             {submitted && (
-              <div className="p-3 bg-cyan-500/20 border border-cyan-400 text-cyan-200 font-hud text-xs font-bold">
+              <div className="p-3 bg-primary/20 border border-primary text-accent font-hud text-xs font-bold">
                 ✓ TRANSMISSION READY: Launching your mail client...
               </div>
             )}

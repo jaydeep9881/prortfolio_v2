@@ -21,7 +21,7 @@ const SKILL_DATA: Record<string, SkillItem[]> = {
     { name: 'JavaScript (ES6+)', level: 90, badge: '💛' },
     { name: 'HTML5 & Semantic Web', level: 95, badge: '🌐' },
     { name: 'Tailwind CSS', level: 92, badge: '🎨' },
-    { name: 'CSS3 / Animations', level: 88, badge: '✨' },
+    { name: 'CSS3 / Modern Layouts', level: 88, badge: '✨' },
     { name: 'Bootstrap', level: 90, badge: '🅱️' },
   ],
   'Database & Tools': [
@@ -48,16 +48,16 @@ export default function Skills() {
       {/* Section Header */}
       <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-cyan-500/15 border-l-4 border-cyan-400 text-cyan-300 font-hud text-xs font-bold tracking-widest mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary/20 border-l-4 border-primary text-primary font-hud text-xs font-bold tracking-widest mb-3">
             <span>VICE CITY SKILL MATRIX</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
             TECHNICAL{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-cyan-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-highlight">
               ARSENAL
             </span>
           </h2>
-          <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-sky-300 mt-4" />
+          <div className="w-28 h-1 bg-gradient-to-r from-primary to-accent mt-4" />
         </div>
 
         {/* Category Filters */}
@@ -68,8 +68,8 @@ export default function Skills() {
               onClick={() => setActiveTab(cat)}
               className={`px-4 py-2 border transition-all duration-200 ${
                 activeTab === cat
-                  ? 'border-cyan-400 bg-cyan-500/25 text-white shadow-md shadow-cyan-500/30'
-                  : 'border-cyan-400/20 bg-black/40 text-gray-400 hover:border-cyan-400/50 hover:text-white'
+                  ? 'border-accent bg-accent/25 text-white shadow-md shadow-accent/30'
+                  : 'border-primary/25 bg-surface/80 text-gray-300 hover:border-accent hover:text-white'
               }`}
             >
               {cat}
@@ -90,14 +90,14 @@ export default function Skills() {
             className="ocean-card p-6 relative group"
           >
             {/* Category Header */}
-            <div className="flex items-center justify-between pb-4 mb-5 border-b border-cyan-400/20">
+            <div className="flex items-center justify-between pb-4 mb-5 border-b border-primary/20">
               <h3 className="font-display text-xl font-bold text-white flex items-center gap-2">
-                <span className="text-cyan-400">
+                <span className="text-primary">
                   {catKey.includes('Backend') ? '⚙️' : catKey.includes('Frontend') ? '🎨' : '🗄️'}
                 </span>
                 {catKey}
               </h3>
-              <span className="font-hud text-xs text-cyan-400 bg-cyan-400/15 px-2 py-0.5 border border-cyan-400/40">
+              <span className="font-hud text-xs text-accent bg-accent/15 px-2 py-0.5 border border-accent/40">
                 {SKILL_DATA[catKey]?.length} SKILLS
               </span>
             </div>
@@ -111,17 +111,17 @@ export default function Skills() {
                       <span>{skill.badge}</span>
                       <span>{skill.name}</span>
                     </span>
-                    <span className="text-cyan-400 font-mono font-bold">{skill.level}%</span>
+                    <span className="text-accent font-mono font-bold">{skill.level}%</span>
                   </div>
 
                   {/* Level Bar */}
-                  <div className="w-full h-2 bg-black/60 border border-cyan-400/25 overflow-hidden">
+                  <div className="w-full h-2 bg-black/60 border border-primary/25 overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.8, delay: sIdx * 0.08 }}
-                      className="h-full bg-gradient-to-r from-cyan-500 to-sky-300"
+                      className="h-full bg-gradient-to-r from-primary to-accent"
                     />
                   </div>
                 </div>

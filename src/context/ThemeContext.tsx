@@ -2,6 +2,53 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export type ThemeId = 'vice-ocean' | 'vice-neon' | 'vice-dark' | 'vice-light';
 export type TextSize = 'normal' | 'large' | 'xlarge';
+export type BgOverlayMode = 'none' | 'subtle' | 'tinted';
+
+export interface BgWallpaper {
+  id: string;
+  name: string;
+  thumbnail: string;
+  url: string;
+  description: string;
+}
+
+export const WALLPAPERS: BgWallpaper[] = [
+  {
+    id: 'gta6-ocean',
+    name: 'GTA VI Ocean & Skyline (Provided Image)',
+    thumbnail: '/Grand Theft Auto 6.jpg',
+    url: '/Grand Theft Auto 6.jpg',
+    description: 'Vice City tropical ocean bay & modern high-rises',
+  },
+  {
+    id: 'vice-beach-sunset',
+    name: 'Vice Beach & Palm Sunset (Web)',
+    thumbnail: 'https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=400&auto=format&fit=crop',
+    url: 'https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=1920&auto=format&fit=crop',
+    description: 'Iconic coastal sunset with silhouette palms',
+  },
+  {
+    id: 'miami-south-beach',
+    name: 'Miami Ocean Drive & Bay (Web)',
+    thumbnail: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=400&auto=format&fit=crop',
+    url: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1920&auto=format&fit=crop',
+    description: 'Crystal azure waters & coastal skyline',
+  },
+  {
+    id: 'vice-downtown-marina',
+    name: 'Vice Marina & Yachts (Web)',
+    thumbnail: 'https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?q=80&w=400&auto=format&fit=crop',
+    url: 'https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?q=80&w=1920&auto=format&fit=crop',
+    description: 'Luxury yachts, bridges and glass towers',
+  },
+  {
+    id: 'tropical-keys-reefs',
+    name: 'Vice Keys & Turquoise Reefs (Web)',
+    thumbnail: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=400&auto=format&fit=crop',
+    url: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1920&auto=format&fit=crop',
+    description: 'Tropical paradise azure coral waters',
+  },
+];
 
 export interface ThemeConfig {
   id: ThemeId;
@@ -32,7 +79,7 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
       muted: '#94a3b8',
       primary: '#0ea5e9', // Sky blue
       accent: '#22d3ee', // Aqua cyan
-      highlight: '#ff7a59', // Coral sunset
+      highlight: '#38bdf8', // Bright cerulean
     },
   },
   'vice-neon': {
@@ -46,8 +93,8 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
       surfaceCard: '#2d1448',
       muted: '#a8a29e',
       primary: '#f43f5e', // Hot pink
-      accent: '#f97316', // Neon orange
-      highlight: '#00f2fe', // Cyan contrast
+      accent: '#a855f7', // Electric purple
+      highlight: '#f97316', // Sunset orange
     },
   },
   'vice-dark': {
@@ -60,9 +107,9 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
       surface: '#0f172a',
       surfaceCard: '#1e293b',
       muted: '#64748b',
-      primary: '#06b6d4',
-      accent: '#10b981',
-      highlight: '#38bdf8',
+      primary: '#06b6d4', // Laser cyan
+      accent: '#10b981', // Emerald
+      highlight: '#38bdf8', // Ice blue
     },
   },
   'vice-light': {
@@ -75,23 +122,28 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
       surface: '#ffffff',
       surfaceCard: '#e0f2fe',
       muted: '#475569',
-      primary: '#0284c7',
-      accent: '#0891b2',
-      highlight: '#ea580c',
+      primary: '#0284c7', // Ocean deep blue
+      accent: '#0891b2', // Teal
+      highlight: '#ea580c', // Tangerine
     },
   },
 };
 
 interface ThemeContextType {
   theme: ThemeId;
-  setTheme: (t: ThemeId | 'light' | 'dark') => void;
+  setTheme: (_t: ThemeId | 'light' | 'dark') => void;
   textSize: TextSize;
-  setTextSize: (s: TextSize) => void;
+  setTextSize: (_s: TextSize) => void;
   cycleTextSize: () => void;
   bgEffects: boolean;
-  setBgEffects: (b: boolean) => void;
+  setBgEffects: (_b: boolean) => void;
+  bgOverlay: BgOverlayMode;
+  setBgOverlay: (_m: BgOverlayMode) => void;
+  toggleBgOverlay: () => void;
+  wallpaper: string;
+  setWallpaper: (_url: string) => void;
   profileOpen: boolean;
-  setProfileOpen: (open: boolean) => void;
+  setProfileOpen: (_open: boolean) => void;
   currentThemeConfig: ThemeConfig;
   cycleTheme: () => void;
 }
@@ -101,8 +153,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<ThemeId>(() => {
     const saved = localStorage.getItem('gta_theme');
-    if (saved && (saved in THEMES)) return saved as ThemeId;
-    // Map legacy 'dark' or 'light'
+    if (saved && saved in THEMES) return saved as ThemeId;
     const legacy = localStorage.getItem('theme');
     if (legacy === 'light') return 'vice-light';
     return 'vice-ocean';
@@ -119,9 +170,20 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return saved !== 'false';
   });
 
+  const [bgOverlay, setBgOverlayState] = useState<BgOverlayMode>(() => {
+    const saved = localStorage.getItem('gta_bg_overlay');
+    if (saved === 'none' || saved === 'subtle' || saved === 'tinted') return saved;
+    // Default to 'none' or 'subtle' so user doesn't get forced heavy blue tint!
+    return 'none';
+  });
+
+  const [wallpaper, setWallpaperState] = useState<string>(() => {
+    const saved = localStorage.getItem('gta_wallpaper');
+    return saved || '/Grand Theft Auto 6.jpg';
+  });
+
   const [profileOpen, setProfileOpen] = useState(false);
 
-  // Set theme safely with backwards-compatibility for 'light' | 'dark'
   const setTheme = (t: ThemeId | 'light' | 'dark') => {
     let resolved: ThemeId = 'vice-ocean';
     if (t === 'light') resolved = 'vice-light';
@@ -138,6 +200,22 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('gta_text_size', s);
   };
 
+  const setBgOverlay = (m: BgOverlayMode) => {
+    setBgOverlayState(m);
+    localStorage.setItem('gta_bg_overlay', m);
+  };
+
+  const toggleBgOverlay = () => {
+    const order: BgOverlayMode[] = ['none', 'subtle', 'tinted'];
+    const next = order[(order.indexOf(bgOverlay) + 1) % order.length];
+    setBgOverlay(next);
+  };
+
+  const setWallpaper = (url: string) => {
+    setWallpaperState(url);
+    localStorage.setItem('gta_wallpaper', url);
+  };
+
   const cycleTextSize = () => {
     const order: TextSize[] = ['normal', 'large', 'xlarge'];
     const next = order[(order.indexOf(textSize) + 1) % order.length];
@@ -150,22 +228,31 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(next);
   };
 
-  // Sync to DOM
+  // Sync design tokens to DOM CSS variables
   useEffect(() => {
     const root = document.documentElement;
 
-    // Remove old classes
-    root.classList.remove('theme-vice-ocean', 'theme-vice-neon', 'theme-vice-dark', 'theme-vice-light', 'light', 'dark');
+    // Reset classes
+    root.classList.remove(
+      'theme-vice-ocean',
+      'theme-vice-neon',
+      'theme-vice-dark',
+      'theme-vice-light',
+      'light',
+      'dark',
+      'overlay-none',
+      'overlay-subtle',
+      'overlay-tinted'
+    );
     root.classList.remove('text-size-normal', 'text-size-large', 'text-size-xlarge');
 
-    // Add theme class
+    // Add theme & mode classes
     root.classList.add(`theme-${theme}`);
     root.classList.add(theme === 'vice-light' ? 'light' : 'dark');
-
-    // Add font scaling class
     root.classList.add(`text-size-${textSize}`);
+    root.classList.add(`overlay-${bgOverlay}`);
 
-    // Update CSS variables
+    // Update CSS variables for full token-based styling
     const conf = THEMES[theme];
     const setVar = (name: string, hex: string) => {
       const v = hexToRgb(hex);
@@ -188,7 +275,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     } else {
       root.style.setProperty('--font-scale', '1');
     }
-  }, [theme, textSize]);
+  }, [theme, textSize, bgOverlay]);
 
   return (
     <ThemeContext.Provider
@@ -203,6 +290,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           setBgEffects(b);
           localStorage.setItem('gta_bg_effects', String(b));
         },
+        bgOverlay,
+        setBgOverlay,
+        toggleBgOverlay,
+        wallpaper,
+        setWallpaper,
         profileOpen,
         setProfileOpen,
         currentThemeConfig: THEMES[theme],

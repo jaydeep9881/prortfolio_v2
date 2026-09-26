@@ -15,80 +15,95 @@ export default function GTABackground({ theme: propTheme }: GTABackgroundProps) 
 
   const currentTheme = themeContext?.theme || propTheme || 'vice-ocean';
   const bgEffects = themeContext ? themeContext.bgEffects : true;
+  const bgOverlay = themeContext ? themeContext.bgOverlay : 'none';
+  const activeWallpaper = themeContext?.wallpaper || '/Grand Theft Auto 6.jpg';
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    if (!bgEffects) return;
     const handleMouseMove = (e: MouseEvent) => {
-      // Subtle parallax offset
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 15;
+      const x = (e.clientX / window.innerWidth - 0.5) * 16;
+      const y = (e.clientY / window.innerHeight - 0.5) * 12;
       setMousePos({ x, y });
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [bgEffects]);
 
-  // Theme-specific overlays
-  const themeOverlay = useMemo(() => {
+  // Compute overlay based on user's overlay preference:
+  // 'none' = completely clear image without blue tint layer!
+  // 'subtle' = minimal neutral dark scrim
+  // 'tinted' = full thematic color tint
+  const overlayStyle = useMemo(() => {
+    if (bgOverlay === 'none') {
+      // Completely clear! No blue layer at all!
+      return 'linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.35) 100%)';
+    }
+
+    if (bgOverlay === 'subtle') {
+      return 'linear-gradient(180deg, rgba(3, 10, 20, 0.55) 0%, rgba(3, 10, 20, 0.3) 50%, rgba(3, 10, 20, 0.65) 100%)';
+    }
+
+    // 'tinted': Theme-specific color layer
     switch (currentTheme) {
       case 'vice-neon':
-        return 'linear-gradient(180deg, rgba(14, 6, 24, 0.88) 0%, rgba(45, 20, 72, 0.72) 40%, rgba(14, 6, 24, 0.92) 100%)';
+        return 'linear-gradient(180deg, rgba(14, 6, 24, 0.82) 0%, rgba(45, 20, 72, 0.6) 40%, rgba(14, 6, 24, 0.88) 100%)';
       case 'vice-dark':
-        return 'linear-gradient(180deg, rgba(3, 7, 18, 0.94) 0%, rgba(15, 23, 42, 0.82) 45%, rgba(3, 7, 18, 0.96) 100%)';
+        return 'linear-gradient(180deg, rgba(3, 7, 18, 0.88) 0%, rgba(15, 23, 42, 0.7) 45%, rgba(3, 7, 18, 0.92) 100%)';
       case 'vice-light':
       case 'light':
-        return 'linear-gradient(180deg, rgba(240, 249, 255, 0.88) 0%, rgba(224, 242, 254, 0.75) 50%, rgba(240, 249, 255, 0.92) 100%)';
+        return 'linear-gradient(180deg, rgba(240, 249, 255, 0.75) 0%, rgba(224, 242, 254, 0.55) 50%, rgba(240, 249, 255, 0.82) 100%)';
       case 'vice-ocean':
       default:
-        // Sky Blue / Ocean Turquoise theme
-        return 'linear-gradient(180deg, rgba(4, 18, 36, 0.88) 0%, rgba(7, 34, 61, 0.65) 35%, rgba(6, 28, 52, 0.75) 70%, rgba(4, 18, 36, 0.94) 100%)';
+        return 'linear-gradient(180deg, rgba(4, 18, 36, 0.78) 0%, rgba(7, 34, 61, 0.5) 35%, rgba(6, 28, 52, 0.6) 70%, rgba(4, 18, 36, 0.85) 100%)';
     }
-  }, [currentTheme]);
+  }, [bgOverlay, currentTheme]);
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none select-none">
-      {/* Real GTA VI Image with parallax */}
+      {/* Background Image (provided GTA VI or internet wallpaper) */}
       <div
         className="absolute -inset-4 transition-transform duration-700 ease-out"
         style={{
-          transform: `translate3d(${mousePos.x * -0.5}px, ${mousePos.y * -0.5}px, 0) scale(1.04)`,
+          transform: bgEffects
+            ? `translate3d(${mousePos.x * -0.5}px, ${mousePos.y * -0.5}px, 0) scale(1.04)`
+            : 'scale(1)',
         }}
       >
         <img
-          src="/Grand Theft Auto 6.jpg"
+          key={activeWallpaper}
+          src={activeWallpaper}
           alt="GTA VI Vice City Skyline & Ocean"
-          className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.05]"
+          className="w-full h-full object-cover object-center filter brightness-[0.98] contrast-[1.05] transition-opacity duration-700"
           loading="eager"
         />
       </div>
 
-      {/* Atmospheric Theme Gradient Overlay for optimal text readability */}
+      {/* Background Overlay Layer (Can be disabled / set to none to remove blue tint!) */}
       <div
-        className="absolute inset-0 transition-all duration-700"
-        style={{ background: themeOverlay }}
+        className="absolute inset-0 transition-all duration-500"
+        style={{ background: overlayStyle }}
       />
 
-      {/* Ocean Sun Glint / Caustic shimmer particles */}
-      {bgEffects && (
+      {/* Atmospheric Caustics (Only when bgEffects is enabled AND overlay is not none) */}
+      {bgEffects && bgOverlay !== 'none' && (
         <>
-          {/* Cyan / Sky Blue ambient glow spots */}
           <div
-            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full filter blur-[120px] opacity-25 pointer-events-none transition-all duration-1000"
+            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full filter blur-[130px] opacity-20 pointer-events-none transition-all duration-1000"
             style={{
-              background: currentTheme === 'vice-neon' ? '#ec4899' : '#00f2fe',
+              background: 'rgb(var(--primary))',
             }}
           />
           <div
-            className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] rounded-full filter blur-[140px] opacity-20 pointer-events-none transition-all duration-1000"
+            className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] rounded-full filter blur-[140px] opacity-15 pointer-events-none transition-all duration-1000"
             style={{
-              background: currentTheme === 'vice-neon' ? '#8b5cf6' : '#0ea5e9',
+              background: 'rgb(var(--accent))',
             }}
           />
 
-          {/* Ocean Water Shimmer caustics layer */}
-          <div className="absolute inset-0 opacity-[0.07] animate-ocean-shimmer mix-blend-screen pointer-events-none">
+          <div className="absolute inset-0 opacity-[0.05] animate-ocean-shimmer mix-blend-screen pointer-events-none">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full">
               <filter id="oceanWaterCaustics">
                 <feTurbulence type="fractalNoise" baseFrequency="0.03 0.05" numOctaves="3" result="noise" />
@@ -103,14 +118,11 @@ export default function GTABackground({ theme: propTheme }: GTABackgroundProps) 
         </>
       )}
 
-      {/* Vice City scanline overlay */}
-      <div className="absolute inset-0 scanline-overlay pointer-events-none opacity-40" />
-
-      {/* Vignette Edge Shading */}
+      {/* Very subtle edge vignette */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at center, transparent 35%, rgba(2, 6, 18, 0.6) 100%)',
+          background: 'radial-gradient(ellipse at center, transparent 40%, rgba(2, 6, 18, 0.45) 100%)',
         }}
       />
     </div>

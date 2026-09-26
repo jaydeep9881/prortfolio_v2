@@ -37,18 +37,18 @@ export default function Header({ theme: propTheme, setTheme: propSetTheme }: Hea
   ];
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#041224]/85 border-b border-cyan-400/40 shadow-lg shadow-cyan-950/40 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-surface/90 border-b border-primary/40 shadow-lg shadow-black/40 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
         {/* Left: GTA Vice City Logo / Callout */}
         <div className="flex items-center gap-3">
           <a href="#home" className="focus-ring group flex items-center gap-2.5">
-            <span className="w-2.5 h-6 bg-cyan-400 transform -skew-x-12 group-hover:bg-cyan-300 transition-colors" />
+            <span className="w-2.5 h-6 bg-accent transform -skew-x-12 group-hover:bg-primary transition-colors" />
             <div className="flex flex-col">
-              <span className="font-display font-black text-xl sm:text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-cyan-400 group-hover:from-white group-hover:to-cyan-300 transition-all">
+              <span className="font-display font-black text-xl sm:text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-highlight group-hover:from-white group-hover:to-accent transition-all">
                 {config.site.title}
               </span>
-              <span className="font-hud text-[9px] uppercase tracking-widest text-cyan-400/80 -mt-1 hidden sm:block">
-                VICE OCEAN // FULL-STACK
+              <span className="font-hud text-[9px] uppercase tracking-widest text-accent/80 -mt-1 hidden sm:block">
+                VICE CITY // {themeContext?.currentThemeConfig.name.toUpperCase() || 'PORTFOLIO'}
               </span>
             </div>
           </a>
@@ -60,23 +60,42 @@ export default function Header({ theme: propTheme, setTheme: propSetTheme }: Hea
             <a
               key={link.label}
               href={link.href}
-              className="text-gray-300 hover:text-cyan-300 focus-ring py-1 relative group transition-colors"
+              className="text-gray-300 hover:text-accent focus-ring py-1 relative group transition-colors"
             >
               {link.label}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-sky-300 group-hover:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300" />
             </a>
           ))}
         </nav>
 
         {/* Right: Controls & Profile Trigger */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Quick Blue Overlay Removal Toggle */}
+          {themeContext && (
+            <button
+              onClick={themeContext.toggleBgOverlay}
+              title={`Blue Overlay: ${themeContext.bgOverlay.toUpperCase()} (Click to toggle / remove blue tint layer)`}
+              aria-label="Toggle background overlay"
+              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 border font-hud text-xs font-bold transition-all ${
+                themeContext.bgOverlay === 'none'
+                  ? 'border-green-400 bg-green-500/20 text-green-300 hover:border-green-300'
+                  : 'border-accent/40 bg-black/40 text-accent hover:border-accent'
+              }`}
+            >
+              <span>{themeContext.bgOverlay === 'none' ? '☀️' : '🎭'}</span>
+              <span className="font-mono text-[10px] tracking-wide">
+                BG TINT: {themeContext.bgOverlay === 'none' ? 'OFF' : themeContext.bgOverlay.toUpperCase()}
+              </span>
+            </button>
+          )}
+
           {/* Quick Font Size Switcher */}
           {themeContext && (
             <button
               onClick={themeContext.cycleTextSize}
               title={`Adjust Text Size: Current ${themeContext.textSize.toUpperCase()}`}
               aria-label="Adjust text size"
-              className="hidden sm:flex items-center justify-center px-2 py-1 bg-black/40 hover:bg-cyan-500/20 border border-cyan-400/40 hover:border-cyan-400 text-cyan-300 font-hud text-xs font-bold transition-all"
+              className="hidden sm:flex items-center justify-center px-2 py-1 bg-black/40 hover:bg-primary/20 border border-primary/40 hover:border-accent text-accent font-hud text-xs font-bold transition-all"
             >
               A{themeContext.textSize === 'large' ? '+' : themeContext.textSize === 'xlarge' ? '++' : ''}
             </button>
@@ -87,7 +106,7 @@ export default function Header({ theme: propTheme, setTheme: propSetTheme }: Hea
             aria-label="Toggle theme"
             title="Toggle theme"
             onClick={cycleTheme}
-            className="p-2 sm:px-3 sm:py-1.5 bg-black/40 hover:bg-cyan-500/20 border border-cyan-400/40 hover:border-cyan-400 text-cyan-300 font-hud text-xs font-bold transition-all flex items-center gap-1.5"
+            className="p-1.5 sm:px-3 sm:py-1.5 bg-black/40 hover:bg-primary/20 border border-primary/40 hover:border-accent text-accent font-hud text-xs font-bold transition-all flex items-center gap-1.5"
           >
             <span>
               {activeTheme === 'vice-light' || activeTheme === 'light' ? '☀️' : activeTheme === 'vice-neon' ? '🌆' : activeTheme === 'vice-dark' ? '🌃' : '🌊'}
@@ -97,11 +116,11 @@ export default function Header({ theme: propTheme, setTheme: propSetTheme }: Hea
             </span>
           </button>
 
-          {/* Resume Download CTA (Satisfies /resume/i test) */}
+          {/* Resume Download CTA */}
           <a
             href={config.contact.resumeUrl}
             download
-            className="px-3 sm:px-4 py-1.5 bg-gradient-to-r from-cyan-500 to-sky-600 hover:from-cyan-400 hover:to-sky-500 text-white font-hud text-xs font-bold border border-cyan-300 shadow-md shadow-cyan-500/30 hover:shadow-cyan-400/50 transition-all duration-200"
+            className="px-3 sm:px-4 py-1.5 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-highlight text-white font-hud text-xs font-bold border border-accent shadow-md shadow-primary/30 transition-all duration-200"
           >
             RESUME
           </a>
@@ -112,7 +131,7 @@ export default function Header({ theme: propTheme, setTheme: propSetTheme }: Hea
               onClick={() => themeContext.setProfileOpen(true)}
               title="Open Profile & Settings HUD"
               aria-label="Open Agent Profile"
-              className="relative p-0.5 border-2 border-cyan-400 hover:border-white transition-all group rounded-none"
+              className="relative p-0.5 border-2 border-accent hover:border-primary transition-all group rounded-none"
             >
               <img
                 src={config.hero.profileImage}
@@ -127,7 +146,7 @@ export default function Header({ theme: propTheme, setTheme: propSetTheme }: Hea
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle Navigation Menu"
-            className="lg:hidden p-2 text-cyan-400 hover:text-white border border-cyan-400/40 hover:border-cyan-400 transition-colors"
+            className="lg:hidden p-2 text-accent hover:text-white border border-accent/40 hover:border-accent transition-colors"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               {mobileMenuOpen ? (
@@ -147,28 +166,34 @@ export default function Header({ theme: propTheme, setTheme: propSetTheme }: Hea
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#041224]/95 border-b border-cyan-400/40 px-6 py-4 space-y-3 font-hud text-sm"
+            className="lg:hidden bg-surface/95 border-b border-primary/40 px-6 py-4 space-y-3 font-hud text-sm"
           >
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block py-2 text-gray-200 hover:text-cyan-400 border-b border-cyan-400/10 transition-colors"
+                className="block py-2 text-gray-200 hover:text-accent border-b border-primary/10 transition-colors"
               >
                 {link.label}
               </a>
             ))}
             {themeContext && (
-              <div className="pt-2 flex gap-2">
+              <div className="pt-2 flex flex-col gap-2">
+                <button
+                  onClick={themeContext.toggleBgOverlay}
+                  className="w-full py-2 bg-black/60 border border-accent/50 text-accent font-bold text-center text-xs"
+                >
+                  🎭 BG BLUE OVERLAY: {themeContext.bgOverlay === 'none' ? 'OFF (CLEAR)' : themeContext.bgOverlay.toUpperCase()}
+                </button>
                 <button
                   onClick={() => {
                     themeContext.setProfileOpen(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="flex-1 py-2 bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-bold text-center text-xs"
+                  className="w-full py-2 bg-primary/20 border border-primary text-accent font-bold text-center text-xs"
                 >
-                  ⚙️ THEME &amp; PROFILE HUD
+                  ⚙️ THEME, WALLPAPERS &amp; PROFILE HUD
                 </button>
               </div>
             )}

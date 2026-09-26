@@ -37,23 +37,23 @@ export default function ProjectModal({ project, open, onClose }: ProjectModalPro
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-3xl bg-[#041224] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/30 overflow-hidden z-10 my-8 text-white"
+          className="relative w-full max-w-3xl bg-surface/95 border-2 border-primary shadow-2xl shadow-primary/30 overflow-hidden z-10 my-8 text-white"
           style={{
             clipPath:
               'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
           }}
         >
           {/* Header Bar */}
-          <div className="bg-black/80 border-b border-cyan-400/40 px-6 py-4 flex items-center justify-between">
+          <div className="bg-black/80 border-b border-primary/40 px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="w-2.5 h-6 bg-cyan-400 -skew-x-12" />
-              <h2 className="font-hud text-base sm:text-lg font-bold tracking-widest text-cyan-400 uppercase">
+              <span className="w-2.5 h-6 bg-accent -skew-x-12" />
+              <h2 className="font-hud text-base sm:text-lg font-bold tracking-widest text-accent uppercase">
                 MISSION DEBRIEF // {project.title}
               </h2>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-white font-hud font-bold text-sm px-2.5 py-1 border border-cyan-400/30 hover:border-cyan-400 transition-colors"
+              className="text-gray-400 hover:text-white font-hud font-bold text-sm px-2.5 py-1 border border-accent/30 hover:border-accent transition-colors"
             >
               ESC ✕
             </button>
@@ -62,7 +62,7 @@ export default function ProjectModal({ project, open, onClose }: ProjectModalPro
           <div className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
             {/* Project Image Preview */}
             {project.images && project.images.length > 0 && (
-              <div className="border border-cyan-400/40 bg-black overflow-hidden shadow-lg shadow-cyan-950/50">
+              <div className="border border-primary/40 bg-black overflow-hidden shadow-lg shadow-black/50">
                 <img
                   src={project.images[0]}
                   alt={project.title}
@@ -79,8 +79,8 @@ export default function ProjectModal({ project, open, onClose }: ProjectModalPro
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
                 {project.description}
               </p>
-              <div className="p-4 bg-cyan-950/30 border-l-4 border-cyan-400 text-sm text-cyan-100 leading-relaxed">
-                <span className="font-hud font-bold text-cyan-300 block mb-1 text-xs">
+              <div className="p-4 bg-primary/10 border-l-4 border-primary text-sm text-gray-200 leading-relaxed">
+                <span className="font-hud font-bold text-accent block mb-1 text-xs">
                   ARCHITECTURAL EXECUTION:
                 </span>
                 {project.details}
@@ -89,14 +89,14 @@ export default function ProjectModal({ project, open, onClose }: ProjectModalPro
 
             {/* Tech Stack */}
             <div>
-              <div className="font-hud text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
+              <div className="font-hud text-xs font-bold text-accent uppercase tracking-wider mb-2">
                 TECHNOLOGIES UTILIZED:
               </div>
               <div className="flex flex-wrap gap-2">
                 {project.tech.map((t) => (
                   <span
                     key={t}
-                    className="px-3 py-1 bg-black/60 border border-cyan-400/40 text-cyan-300 font-hud text-xs font-semibold"
+                    className="px-3 py-1 bg-black/60 border border-primary/40 text-accent font-hud text-xs font-semibold"
                   >
                     {t}
                   </span>
@@ -105,7 +105,7 @@ export default function ProjectModal({ project, open, onClose }: ProjectModalPro
             </div>
 
             {/* Action Links */}
-            <div className="pt-4 border-t border-cyan-400/20 flex flex-wrap gap-3">
+            <div className="pt-4 border-t border-primary/20 flex flex-wrap gap-3">
               {project.repo && project.repo !== '#' && (
                 <a
                   href={project.repo}

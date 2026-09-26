@@ -48,16 +48,16 @@ export default function Learning() {
     <section id="learning" className="pt-24 pb-16">
       {/* Section Header */}
       <div className="mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-cyan-500/15 border-l-4 border-cyan-400 text-cyan-300 font-hud text-xs font-bold tracking-widest mb-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary/20 border-l-4 border-primary text-primary font-hud text-xs font-bold tracking-widest mb-3">
           <span>R&amp;D INITIATIVES</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
           RESEARCH &amp;{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-cyan-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-highlight">
             ADVANCED LEARNING
           </span>
         </h2>
-        <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-sky-300 mt-4" />
+        <div className="w-28 h-1 bg-gradient-to-r from-primary to-accent mt-4" />
       </div>
 
       {/* Grid of Learning Tracks */}
@@ -69,25 +69,25 @@ export default function Learning() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="ocean-card p-6 relative group border border-cyan-400/30 hover:border-cyan-400 transition-all"
+            className="ocean-card p-6 relative group border border-primary/30 hover:border-accent transition-all"
           >
             {/* Header with Icon & Progress */}
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex items-center gap-3">
-                <span className="text-3xl p-2 bg-black/50 border border-cyan-400/40">
+                <span className="text-3xl p-2 bg-black/50 border border-primary/40">
                   {track.icon}
                 </span>
                 <div>
-                  <h3 className="font-display text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                  <h3 className="font-display text-xl font-bold text-white group-hover:text-accent transition-colors">
                     {track.title}
                   </h3>
-                  <span className="font-hud text-xs text-cyan-400 font-semibold">
+                  <span className="font-hud text-xs text-accent font-semibold">
                     ACTIVE SPRINT // STATUS: STUDYING
                   </span>
                 </div>
               </div>
 
-              <span className="font-mono text-xs font-bold text-cyan-300 bg-cyan-500/20 px-2.5 py-1 border border-cyan-400/40">
+              <span className="font-mono text-xs font-bold text-primary bg-primary/20 px-2.5 py-1 border border-primary/40">
                 {track.progress}%
               </span>
             </div>
@@ -98,13 +98,13 @@ export default function Learning() {
             </p>
 
             {/* Progress Bar */}
-            <div className="w-full h-1.5 bg-black/60 border border-cyan-400/30 overflow-hidden mb-5">
+            <div className="w-full h-1.5 bg-black/60 border border-primary/30 overflow-hidden mb-5">
               <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: `${track.progress}%` }}
                 viewport={{ once: true }}
                 transition={{ duration: 1, delay: 0.2 }}
-                className="h-full bg-gradient-to-r from-cyan-500 to-sky-300"
+                className="h-full bg-gradient-to-r from-primary to-accent"
               />
             </div>
 
@@ -113,7 +113,7 @@ export default function Learning() {
               {track.tags.map((t) => (
                 <span
                   key={t}
-                  className="px-2 py-0.5 bg-black/40 border border-cyan-400/25 text-cyan-300 font-hud text-[11px]"
+                  className="px-2 py-0.5 bg-black/40 border border-primary/25 text-accent font-hud text-[11px]"
                 >
                   #{t}
                 </span>
