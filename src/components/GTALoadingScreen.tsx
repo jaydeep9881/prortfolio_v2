@@ -1,98 +1,118 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-export default function GTALoadingScreen() {
+const TIPS = [
+  'INITIALIZING VICE CITY OCEAN ENVIRONMENT...',
+  'CONNECTING TO FULL-STACK SPRING BOOT SERVICES...',
+  'CALIBRATING REACT.JS & DJANGO ENGINE CORES...',
+  'OPTIMIZING POSTGRESQL & MYSQL PERSISTENCE LAYERS...',
+  'LOADING AGENT ARSENAL & CREDENTIALS...',
+];
+
+export default function GTALoadingScreen({ onComplete }: { onComplete?: () => void }) {
   const [progress, setProgress] = useState(0);
+  const [tipIndex, setTipIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
+          if (onComplete) onComplete();
           return 100;
         }
         return prev + 2;
       });
-    }, 30);
+    }, 45);
 
     return () => clearInterval(interval);
+  }, [onComplete]);
+
+  useEffect(() => {
+    const tipInterval = setInterval(() => {
+      setTipIndex((prev) => (prev + 1) % TIPS.length);
+    }, 900);
+    return () => clearInterval(tipInterval);
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden">
-      {/* GTA VI Vice City Background with gradient */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          background: `linear-gradient(to bottom, #58468c 0%, #7a5ca8 25%, #aa64b4 45%, #e88a9a 65%, #ff9664 85%, #ffc896 100%)`
-        }}
-      />
-
-      {/* Palm trees and buildings silhouettes */}
-      <svg className="absolute bottom-0 w-full h-2/3 opacity-80" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMax slice">
-        {/* Buildings */}
-        <rect x="100" y="200" width="80" height="300" fill="#2d1b4e" opacity="0.7" />
-        <rect x="200" y="150" width="100" height="350" fill="#2d1b4e" opacity="0.7" />
-        <rect x="450" y="180" width="110" height="320" fill="#2d1b4e" opacity="0.7" />
-        <rect x="700" y="190" width="95" height="310" fill="#2d1b4e" opacity="0.7" />
-        <rect x="900" y="170" width="120" height="330" fill="#2d1b4e" opacity="0.7" />
-        
-        {/* Palm trees */}
-        <g opacity="0.8">
-          <rect x="50" y="250" width="10" height="250" fill="#1a0b2e" />
-          <ellipse cx="55" cy="245" rx="50" ry="25" fill="#1a0b2e" />
-          <ellipse cx="55" cy="230" rx="55" ry="22" fill="#1a0b2e" />
-        </g>
-        <g opacity="0.8">
-          <rect x="1100" y="250" width="10" height="250" fill="#1a0b2e" />
-          <ellipse cx="1105" cy="245" rx="50" ry="25" fill="#1a0b2e" />
-          <ellipse cx="1105" cy="230" rx="55" ry="22" fill="#1a0b2e" />
-        </g>
-      </svg>
-
-      {/* Ground fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/70 to-transparent"></div>
-
-      <div className="relative z-10 w-full max-w-6xl px-8 flex flex-col items-center justify-center h-full">
-        {/* GTA VI Style Logo */}
-        <motion.div
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-auto mt-32"
-        >
-          {/* Logo */}
-          <div className="relative inline-block mb-6">
-            <h1 
-              className="text-[10rem] md:text-[14rem] font-black leading-none"
-              style={{
-                fontFamily: '"Arial Black", sans-serif',
-                color: 'white',
-                textShadow: '0 0 40px rgba(255,255,255,0.5), 6px 6px 0px rgba(0,0,0,0.3)',
-                letterSpacing: '-0.05em'
-              }}
-            >
-              PORTFOLIO
-            </h1>
-          </div>
-        </motion.div>
-
-        {/* Progress bar at bottom */}
-        <div className="w-full max-w-2xl mb-24">
-          <div className="relative w-full h-1 bg-white/30 overflow-hidden rounded-full">
-            <motion.div
-              className="absolute inset-y-0 left-0 bg-white rounded-full shadow-lg shadow-white/50"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
+    <div className="fixed inset-0 z-[100] flex flex-col justify-between overflow-hidden bg-black select-none">
+      {/* Background with real GTA VI Ocean Image */}
+      <div className="absolute inset-0">
+        <img
+          src="/Grand Theft Auto 6.jpg"
+          alt="GTA VI Loading Background"
+          className="w-full h-full object-cover filter brightness-[0.65] contrast-[1.1] scale-105 animate-pulse duration-[8000ms]"
+        />
+        {/* Ocean gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#041224]/80 via-transparent to-[#041224]/95" />
+        <div className="absolute inset-0 scanline-overlay opacity-30" />
       </div>
 
-      {/* Copyright */}
-      <div className="absolute bottom-6 left-0 right-0 text-center z-20">
-        <p className="text-white/70 text-xs tracking-wider">
-          Inspired by Grand Theft Auto VI © Rockstar Games
-        </p>
+      {/* Top Bar: Mission Identifier */}
+      <div className="relative z-10 p-6 sm:p-8 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="w-2.5 h-6 bg-cyan-400 -skew-x-12" />
+          <span className="font-hud text-xs sm:text-sm font-bold tracking-widest text-cyan-400">
+            VICE CITY // DEVELOPER DOSSIER 2026
+          </span>
+        </div>
+        {onComplete && (
+          <button
+            onClick={onComplete}
+            className="font-hud text-xs text-gray-300 hover:text-cyan-400 border border-cyan-400/40 px-3 py-1 hover:border-cyan-400 transition-colors"
+          >
+            SKIP [SPACE] ➔
+          </button>
+        )}
+      </div>
+
+      {/* Center: GTA VI Style Massive Title */}
+      <div className="relative z-10 px-6 text-center my-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="inline-block px-4 py-1 bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-hud text-xs sm:text-sm font-bold tracking-widest mb-4">
+            MISSION: PORTFOLIO SHOWCASE
+          </div>
+          <h1
+            className="text-5xl sm:text-7xl md:text-9xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-100 to-cyan-400 tracking-tighter"
+            style={{
+              textShadow: '0 0 35px rgba(56, 189, 248, 0.4), 0 0 70px rgba(14, 165, 233, 0.2)',
+            }}
+          >
+            JAYDEEP
+          </h1>
+          <p className="font-hud text-sm sm:text-base font-bold text-cyan-300 tracking-widest mt-2 uppercase">
+            FULL-STACK DEVELOPER • JAVA • SPRING BOOT • REACT
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Bottom: Progress Bar & Dynamic Status Tips */}
+      <div className="relative z-10 p-6 sm:p-10 max-w-4xl mx-auto w-full">
+        <div className="flex items-center justify-between text-xs font-hud font-bold text-cyan-400 mb-2">
+          <span className="tracking-wider flex items-center gap-2">
+            <span className="w-2 h-2 bg-cyan-400 rounded-full animate-ping" />
+            {TIPS[tipIndex]}
+          </span>
+          <span className="text-sm font-mono text-white">{progress}%</span>
+        </div>
+
+        {/* Outer Bar */}
+        <div className="w-full h-2 bg-black/70 border border-cyan-400/50 p-0.5 overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-cyan-500 via-sky-400 to-cyan-300 shadow-lg shadow-cyan-400/50"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+
+        <div className="mt-4 flex items-center justify-between text-[11px] text-gray-400 font-mono">
+          <span>SAVITRIBAI PHULE PUNE UNIVERSITY</span>
+          <span>GTA VI OCEAN EDITION</span>
+        </div>
       </div>
     </div>
   );

@@ -7,54 +7,37 @@ import Skills from './sections/Skills';
 import Learning from './sections/Learning';
 import About from './sections/About';
 import Contact from './sections/Contact';
-import config from './data/config';
 import Experience from './sections/Experience';
 import GTABackground from './components/GTABackground';
 import GTALoadingScreen from './components/GTALoadingScreen';
+import ProfileModal from './components/ProfileModal';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 
-function App() {
+function PortfolioApp() {
   const [isLoading, setIsLoading] = useState(true);
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    const stored = localStorage.getItem('theme');
-    if (stored === 'light' || stored === 'dark') return stored;
-    return 'dark'; // Default to dark for GTA theme
-  });
+  const { theme, setTheme } = useTheme();
 
-  useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    localStorage.setItem('theme', theme);
-    const colors = theme === 'dark' ? config.theme.colors : (config.theme.lightColors || config.theme.colors);
-    const setVar = (name: string, hex: string) => {
-      const v = hexToRgbTriplet(hex);
-      root.style.setProperty(`--${name}`, `${v.r} ${v.g} ${v.b}`);
-    };
-    setVar('background', colors.background);
-    setVar('surface', colors.surface);
-    setVar('muted', colors.muted);
-    setVar('primary', colors.primary);
-    setVar('accent', colors.accent);
-  }, [theme]);
-
-  // Simulate loading (3 seconds)
+  // Loading screen timer (2.4s)
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 2400);
     return () => clearTimeout(timer);
   }, []);
 
   if (isLoading) {
-    return <GTALoadingScreen />;
+    return <GTALoadingScreen onComplete={() => setIsLoading(false)} />;
   }
 
   return (
-    <div className="relative min-h-screen bg-black text-white">
+    <div className="relative min-h-screen bg-background text-white transition-colors duration-300">
+      {/* GTA VI Real Image Background */}
       <GTABackground theme={theme} />
-      <div className="relative z-10">
+
+      {/* Main Content Area */}
+      <div className="relative z-10 flex flex-col min-h-screen">
         <Header theme={theme} setTheme={setTheme} />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6">
           <Hero />
           <Experience />
           <Skills />
@@ -65,23 +48,17 @@ function App() {
         </main>
         <Footer />
       </div>
+
+      {/* Interactive Agent Profile & Theme Customizer Modal */}
+      <ProfileModal />
     </div>
   );
 }
 
-export default App;
-
-function hexToRgbTriplet(hex: string): { r: number; g: number; b: number } {
-  const cleaned = hex.replace('#', '');
-  const full = cleaned.length === 3
-    ? cleaned.split('').map((c) => c + c).join('')
-    : cleaned;
-  const num = parseInt(full, 16);
-  return {
-    r: (num >> 16) & 255,
-    g: (num >> 8) & 255,
-    b: num & 255,
-  };
+export default function App() {
+  return (
+    <ThemeProvider>
+      <PortfolioApp />
+    </ThemeProvider>
+  );
 }
-
-

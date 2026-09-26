@@ -2,277 +2,308 @@
 @tailwind components;
 @tailwind utilities;
 
-/* GTA 6 inspired global styles */
+/* GTA VI Vice Ocean Design System */
 @layer base {
-  * {
-    border-color: rgba(255, 255, 255, 0.1);
+  :root {
+    color-scheme: dark;
+    --background: 4 18 36;
+    --surface: 7 31 58;
+    --surface-card: 12 46 84;
+    --muted: 148 163 184;
+    --primary: 14 165 233;
+    --accent: 34 211 238;
+    --highlight: 255 122 89;
+    --font-scale: 1;
+    --mouse-x: 0;
+    --mouse-y: 0;
   }
-  
+
+  :root.light,
+  :root.theme-vice-light {
+    color-scheme: light;
+    --background: 240 249 255;
+    --surface: 255 255 255;
+    --surface-card: 224 242 254;
+    --muted: 71 85 105;
+    --primary: 2 132 199;
+    --accent: 8 145 178;
+    --highlight: 234 88 12;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: calc(16px * var(--font-scale, 1));
+  }
+
   body {
-    @apply bg-black text-white;
+    @apply bg-background text-white;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     overflow-x: hidden;
     overflow-y: auto;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
-  /* Smooth scrolling */
-  html {
-    scroll-behavior: smooth;
+  .light body {
+    @apply text-slate-900;
   }
 
-  /* Custom scrollbar */
+  /* Custom GTA Ocean Scrollbar */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-black;
+    background: rgba(4, 18, 36, 0.95);
+  }
+
+  .light ::-webkit-scrollbar-track {
+    background: #e0f2fe;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-cyan-400 hover:bg-cyan-300;
+    background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
   }
 
-  /* Keyboard focus styles */
-  kbd {
-    @apply inline-block px-2 py-1 text-sm font-mono bg-gray-800 border border-cyan-400/50 rounded shadow;
+  ::-webkit-scrollbar-thumb:hover {
+    background: #38bdf8;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.9);
+  }
+
+  /* Accessible selection */
+  ::selection {
+    background-color: rgba(14, 165, 233, 0.35);
+    color: #38bdf8;
   }
 }
 
+/* Typography Scaling Utility Classes */
+.text-size-normal {
+  --font-scale: 1;
+}
+
+.text-size-large {
+  --font-scale: 1.125;
+}
+
+.text-size-xlarge {
+  --font-scale: 1.25;
+}
+
 @layer utilities {
-  /* Neon glow effects */
+  /* Vice City & Ocean Glow Effects */
+  .neon-glow-ocean {
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.9),
+                 0 0 25px rgba(14, 165, 233, 0.6),
+                 0 0 45px rgba(6, 182, 212, 0.4);
+  }
+
   .neon-glow-cyan {
     text-shadow: 0 0 10px rgba(34, 211, 238, 0.8),
-                 0 0 20px rgba(34, 211, 238, 0.6),
-                 0 0 30px rgba(34, 211, 238, 0.4);
+                 0 0 20px rgba(34, 211, 238, 0.5);
   }
 
-  .neon-glow-purple {
-    text-shadow: 0 0 10px rgba(168, 85, 247, 0.8),
-                 0 0 20px rgba(168, 85, 247, 0.6),
-                 0 0 30px rgba(168, 85, 247, 0.4);
+  .neon-glow-coral {
+    text-shadow: 0 0 12px rgba(255, 122, 89, 0.9),
+                 0 0 24px rgba(244, 63, 94, 0.6);
   }
 
-  .neon-glow-pink {
-    text-shadow: 0 0 10px rgba(236, 72, 153, 0.8),
-                 0 0 20px rgba(236, 72, 153, 0.6),
-                 0 0 30px rgba(236, 72, 153, 0.4);
+  .box-glow-ocean {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.35),
+                inset 0 0 15px rgba(56, 189, 248, 0.15);
   }
 
-  /* Scanlines effect */
-  .scanlines {
-    position: relative;
+  .box-glow-ocean-lg {
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.45),
+                0 0 15px rgba(14, 165, 233, 0.3);
   }
 
-  .scanlines::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      transparent 50%,
-      rgba(0, 0, 0, 0.1) 50%
-    );
-    background-size: 100% 4px;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* VHS effect */
-  .vhs-effect {
-    animation: vhs 0.5s infinite;
-  }
-
-  @keyframes vhs {
+  /* GTA Vice City Water Caustics / Ocean Shimmer */
+  @keyframes ocean-shimmer {
     0%, 100% {
-      transform: translateX(0);
-    }
-    33% {
-      transform: translateX(-2px);
-    }
-    66% {
-      transform: translateX(2px);
-    }
-  }
-
-  /* Glitch text animation */
-  @keyframes glitch {
-    0% {
-      text-shadow: 2px 2px #00ffff, -2px -2px #ff00ff;
-    }
-    25% {
-      text-shadow: -2px -2px #00ffff, 2px 2px #ff00ff;
+      opacity: 0.15;
+      transform: scale(1) translate(0, 0);
     }
     50% {
-      text-shadow: 2px -2px #00ffff, -2px 2px #ff00ff;
+      opacity: 0.35;
+      transform: scale(1.05) translate(-10px, 8px);
     }
-    75% {
-      text-shadow: -2px 2px #00ffff, 2px -2px #ff00ff;
+  }
+
+  .animate-ocean-shimmer {
+    animation: ocean-shimmer 8s ease-in-out infinite;
+  }
+
+  /* Floating animation */
+  @keyframes gentle-float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  .animate-float {
+    animation: gentle-float 4.5s ease-in-out infinite;
+  }
+
+  /* Pulse border */
+  @keyframes ocean-border-pulse {
+    0%, 100% {
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+    50% {
+      border-color: rgba(34, 211, 238, 0.9);
+      box-shadow: 0 0 25px rgba(34, 211, 238, 0.5);
+    }
+  }
+
+  .animate-border-ocean {
+    animation: ocean-border-pulse 3s infinite;
+  }
+
+  /* Glitch text effect */
+  @keyframes gta-glitch {
+    0% {
+      text-shadow: 2px 0 #00f2fe, -2px 0 #ff6b6b;
+    }
+    20% {
+      text-shadow: -2px 0 #00f2fe, 2px 0 #ff6b6b;
+    }
+    40% {
+      text-shadow: 2px -1px #00f2fe, -2px 1px #ff6b6b;
+    }
+    60% {
+      text-shadow: -1px 2px #00f2fe, 1px -2px #ff6b6b;
+    }
+    80% {
+      text-shadow: 1px 0 #00f2fe, -1px 0 #ff6b6b;
     }
     100% {
-      text-shadow: 2px 2px #00ffff, -2px -2px #ff00ff;
+      text-shadow: 2px 0 #00f2fe, -2px 0 #ff6b6b;
     }
   }
 
-  .glitch {
-    animation: glitch 0.3s infinite;
+  .gta-glitch-hover:hover {
+    animation: gta-glitch 0.4s infinite;
   }
 
-  /* Retro grid background */
-  .retro-grid {
-    background-image: 
-      linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
+  /* Scanlines subtle texture */
+  .scanline-overlay {
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 242, 254, 0.04) 2px,
+      rgba(0, 242, 254, 0.04) 4px
+    );
   }
 }
 
-/* Canvas container */
-canvas {
-  display: block;
-  outline: none;
-}
-
-:root {
-  color-scheme: dark light;
-  --background: 15 23 36; /* #0f1724 */
-  --surface: 11 18 32;    /* #0b1220 */
-  --muted: 156 163 175;   /* #9ca3af */
-  --primary: 139 92 246;  /* #8b5cf6 */
-  --accent: 6 182 212;    /* #06b6d4 */
-  --star-strong: rgba(255, 255, 255, 0.82);
-  --star-dim: rgba(255, 255, 255, 0.35);
-  --mouse-x: 0;
-  --mouse-y: 0;
-}
-
-:root.light {
-  --star-strong: rgba(0, 0, 0, 0.6);
-  --star-dim: rgba(0, 0, 0, 0.25);
-}
-
-html, body, #root {
-  height: 100%;
-}
-
-body {
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-}
-
-/* Smooth scroll and selection styles */
-* {
-  @apply selection:bg-primary/30 selection:text-primary;
-}
-
+/* Glassmorphism & UI Components */
 @layer components {
-  .cosmic-background {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-    transform: translate3d(calc(var(--mouse-x) * 0.35px), calc(var(--mouse-y) * 0.35px), 0);
-    will-change: transform;
-    background-color: rgb(var(--background));
-    background-image:
-      radial-gradient(circle at 16% 22%, rgba(var(--accent), 0.14), transparent 32%),
-      radial-gradient(circle at 82% 16%, rgba(var(--primary), 0.12), transparent 30%),
-      radial-gradient(circle at 24% 78%, rgba(var(--muted), 0.08), transparent 32%);
-    filter: saturate(1.05);
+  /* Vice Ocean Glass Card */
+  .ocean-card {
+    background-color: rgba(7, 31, 58, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .cosmic-background::before,
-  .cosmic-background::after {
-    content: '';
-    position: absolute;
-    inset: -20%;
-    background-repeat: repeat;
-    opacity: 0.8;
-    will-change: transform, opacity;
+  .ocean-card:hover {
+    background-color: rgba(10, 42, 78, 0.85);
+    border-color: rgba(56, 189, 248, 0.65);
+    box-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.35);
   }
 
-  .cosmic-background::before {
-    background-image:
-      radial-gradient(1px 1px at 20px 30px, var(--star-strong), transparent 55%),
-      radial-gradient(1.4px 1.4px at 90px 120px, var(--star-dim), transparent 60%),
-      radial-gradient(0.9px 0.9px at 160px 210px, var(--star-strong), transparent 50%),
-      radial-gradient(1.8px 1.8px at 60px 180px, var(--star-dim), transparent 55%),
-      radial-gradient(2.2px 2.2px at 200px 60px, var(--star-strong), transparent 60%),
-      radial-gradient(1.2px 1.2px at 240px 140px, rgba(var(--accent), 0.7), transparent 60%),
-      radial-gradient(1.6px 1.6px at 110px 40px, rgba(var(--primary), 0.7), transparent 60%);
-    background-size: 140px 140px, 200px 200px, 280px 280px, 220px 220px, 260px 260px, 240px 240px, 300px 300px;
-    animation: star-drift 55s linear infinite;
-    transform: translate3d(calc(var(--mouse-x) * 0.22px), calc(var(--mouse-y) * 0.22px), 0);
+  .light .ocean-card {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-color: rgba(14, 165, 233, 0.3);
+    color: #0f172a;
   }
 
-  .cosmic-background::after {
-    background-image:
-      radial-gradient(1.2px 1.2px at 40px 80px, var(--star-dim), transparent 60%),
-      radial-gradient(1px 1px at 120px 40px, var(--star-strong), transparent 55%),
-      radial-gradient(1.1px 1.1px at 200px 160px, var(--star-dim), transparent 60%),
-      radial-gradient(2.4px 2.4px at 80px 200px, var(--star-strong), transparent 60%),
-      radial-gradient(1.6px 1.6px at 180px 100px, var(--star-dim), transparent 60%),
-      radial-gradient(2.8px 2.8px at 30px 150px, rgba(var(--accent), 0.5), transparent 60%),
-      radial-gradient(1.9px 1.9px at 170px 30px, rgba(var(--primary), 0.6), transparent 60%);
-    filter: blur(0.4px);
-    animation: star-drift-reverse 75s linear infinite, star-twinkle 3.2s ease-in-out infinite;
-    background-size: 180px 180px, 240px 240px, 300px 300px, 200px 200px, 260px 260px, 230px 230px, 320px 320px;
-    transform: translate3d(calc(var(--mouse-x) * -0.18px), calc(var(--mouse-y) * -0.18px), 0);
+  .light .ocean-card:hover {
+    background-color: rgba(255, 255, 255, 0.98);
+    border-color: rgba(2, 132, 199, 0.6);
+    box-shadow: 0 12px 30px -5px rgba(14, 165, 233, 0.2);
   }
-}
 
-@keyframes star-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-220px, -180px, 0); }
-}
-
-@keyframes star-drift-reverse {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(180px, 140px, 0); }
-}
-
-@keyframes star-twinkle {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 0.65; }
-}
-
-/* Glassmorphic card effect */
-.glass {
-  @apply bg-surface/70 border border-white/5 shadow-lg backdrop-blur;
-}
-
-/* Focus and interaction states */
-.focus-ring:focus-visible {
-  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
-}
-
-/* Subtle animations */
-@layer utilities {
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
+  /* GTA Mission Tag / Badge */
+  .gta-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 font-hud font-bold text-xs uppercase tracking-wider;
+    background: rgba(14, 165, 233, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.6);
+    color: #38bdf8;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
   }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-}
 
-/* Inputs stay dark even in light mode */
-@layer components {
+  .light .gta-badge {
+    background: rgba(14, 165, 233, 0.12);
+    border-color: #0284c7;
+    color: #0284c7;
+  }
+
+  /* GTA Cutout Button */
+  .gta-button-primary {
+    @apply relative inline-flex items-center justify-center font-display font-bold uppercase tracking-wider px-6 py-3 transition-all duration-300;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 60%, #0369a1 100%);
+    color: #ffffff;
+    border: 1px solid #38bdf8;
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .gta-button-primary:hover {
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 60%, #0284c7 100%);
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.7);
+    transform: translateY(-2px);
+  }
+
+  .gta-button-secondary {
+    @apply relative inline-flex items-center justify-center font-display font-bold uppercase tracking-wider px-6 py-3 transition-all duration-300;
+    background: rgba(7, 31, 58, 0.75);
+    backdrop-filter: blur(8px);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .gta-button-secondary:hover {
+    background: rgba(14, 165, 233, 0.25);
+    border-color: #38bdf8;
+    color: #ffffff;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* Form Input Base */
   .input-base {
-    @apply rounded-md px-3 py-2 focus-ring w-full;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: inherit;
+    @apply rounded-none px-4 py-3 w-full transition-all duration-300;
+    background-color: rgba(4, 18, 36, 0.75);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #f0f9ff;
+  }
+
+  .input-base:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+    background-color: rgba(7, 31, 58, 0.95);
+  }
+
+  .light .input-base {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(2, 132, 199, 0.35);
+    color: #0f172a;
+  }
+
+  .light .input-base:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 15px rgba(2, 132, 199, 0.3);
   }
 }
-
-.light .input-base {
-  background-color: rgb(15 23 36);
-  color: white;
-}
-
-.input-base::placeholder {
-  color: rgb(156 163 175 / 0.8);
-}
-

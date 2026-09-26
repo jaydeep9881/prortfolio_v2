@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="dietBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a2540"/>
+      <stop offset="100%" stop-color="#051424"/>
+    </linearGradient>
+    <linearGradient id="greenTeal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" rx="12" fill="url(#dietBg)"/>
+  <rect width="800" height="42" fill="#030b14"/>
+  <circle cx="24" cy="21" r="6" fill="#ef4444"/>
+  <circle cx="44" cy="21" r="6" fill="#f59e0b"/>
+  <circle cx="64" cy="21" r="6" fill="#10b981"/>
+  <text x="400" y="26" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="13" text-anchor="middle" font-weight="600">Personalized Diet &amp; Nutrition Planner — Django</text>
+
+  <!-- Left Nutrition Wheel / Ring -->
+  <rect x="25" y="65" width="280" height="410" rx="10" fill="#081c33" stroke="#0ea5e9" stroke-opacity="0.3"/>
+  <text x="165" y="105" fill="#f8fafc" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="bold" text-anchor="middle">Daily Calorie Target</text>
+  
+  <!-- Calorie Circle -->
+  <circle cx="165" cy="210" r="80" fill="none" stroke="#1e293b" stroke-width="16"/>
+  <circle cx="165" cy="210" r="80" fill="none" stroke="url(#greenTeal)" stroke-width="16" stroke-dasharray="502" stroke-dashoffset="140" stroke-linecap="round"/>
+  <text x="165" y="205" fill="#f8fafc" font-family="'Segoe UI', sans-serif" font-size="28" font-weight="bold" text-anchor="middle">2,150</text>
+  <text x="165" y="228" fill="#38bdf8" font-family="'Segoe UI', sans-serif" font-size="13" text-anchor="middle">/ 2,400 kcal</text>
+
+  <!-- Macro bars -->
+  <text x="50" y="335" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="12">Protein: 140g (85%)</text>
+  <rect x="50" y="342" width="230" height="8" rx="4" fill="#1e293b"/>
+  <rect x="50" y="342" width="195" height="8" rx="4" fill="#38bdf8"/>
+
+  <text x="50" y="380" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="12">Carbs: 210g (75%)</text>
+  <rect x="50" y="387" width="230" height="8" rx="4" fill="#1e293b"/>
+  <rect x="50" y="387" width="172" height="8" rx="4" fill="#10b981"/>
+
+  <text x="50" y="425" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="12">Healthy Fats: 65g (70%)</text>
+  <rect x="50" y="432" width="230" height="8" rx="4" fill="#1e293b"/>
+  <rect x="50" y="432" width="161" height="8" rx="4" fill="#f59e0b"/>
+
+  <!-- Right Plan Schedule -->
+  <rect x="330" y="65" width="445" height="195" rx="10" fill="#081c33" stroke="#0ea5e9" stroke-opacity="0.3"/>
+  <text x="355" y="100" fill="#38bdf8" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="bold">🥗 Today's Optimized Meal Schedule</text>
+  
+  <rect x="355" y="115" width="395" height="38" rx="6" fill="#0c2545"/>
+  <text x="370" y="138" fill="#f8fafc" font-family="'Segoe UI', sans-serif" font-size="12">🌅 Breakfast: Oatmeal bowl + Whey Protein + Chia Seeds (520 kcal)</text>
+  
+  <rect x="355" y="160" width="395" height="38" rx="6" fill="#0c2545"/>
+  <text x="370" y="183" fill="#f8fafc" font-family="'Segoe UI', sans-serif" font-size="12">☀️ Lunch: Grilled Chicken / Paneer Brown Rice Bowl (680 kcal)</text>
+
+  <rect x="355" y="205" width="395" height="38" rx="6" fill="#0c2545"/>
+  <text x="370" y="228" fill="#f8fafc" font-family="'Segoe UI', sans-serif" font-size="12">🌙 Dinner: Quinoa Mediterranean Salad + Avocados (490 kcal)</text>
+
+  <!-- BMI & Health Metrics -->
+  <rect x="330" y="280" width="445" height="195" rx="10" fill="#081c33" stroke="#0ea5e9" stroke-opacity="0.3"/>
+  <text x="355" y="315" fill="#22d3ee" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="bold">📈 BMI &amp; Body Composition Calculator</text>
+  <text x="355" y="350" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="13">Current BMI: <tspan fill="#10b981" font-weight="bold">22.4 (Normal Healthy Range)</tspan></text>
+  <text x="355" y="380" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="13">Basal Metabolic Rate (BMR): <tspan fill="#f8fafc" font-weight="bold">1,820 kcal/day</tspan></text>
+  <text x="355" y="410" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="13">Hydration Tracker: <tspan fill="#38bdf8" font-weight="bold">2.8L / 3.5L (80%)</tspan></text>
+  <text x="355" y="440" fill="#64748b" font-family="'Segoe UI', sans-serif" font-size="12">Engineered with Python Django REST backend &amp; MySQL persistence.</text>
+</svg>
